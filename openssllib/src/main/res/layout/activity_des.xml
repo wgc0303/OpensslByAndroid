@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="密钥：" />
+
+            <TextView
+                android:id="@+id/tvKey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="d843o01ad843o01ad843o01a" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="密钥偏移：" />
+
+            <TextView
+                android:id="@+id/tvIV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="d843o01b" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:layout_marginEnd="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="加密内容：" />
+
+            <EditText
+                android:id="@+id/etContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:ellipsize="end"
+                android:textSize="15sp"
+                android:maxLines="1"
+                android:text="根据指定的模式，对带有关联数据的身份验证加密（AEAD）模式的EVP接口进行了微妙的更改，并支持一些其他ctrl操作。要指定其他认证数据（AAD），应在输出参数out设置为NULL的情况下调用EVP_CipherUpdate（），EVP_EncryptUpdate（）或EVP_DecryptUpdate（）。解密时，EVP_DecryptFinal（）或EVP_CipherFinal（）的返回值指示操作是否成功。如果它并不表示成功，认证操作失败和任何输出数据绝不能因为它已损坏使用。根据指定的模式，对带有关联数据的身份验证加密（AEAD）模式的EVP接口进行了微妙的更改，并支持一些其他ctrl操作。要指定其他认证数据（AAD），应在输出参数out设置为NULL的情况下调用EVP_CipherUpdate（），EVP_EncryptUpdate（）或EVP_DecryptUpdate（）。解密时，EVP_DecryptFinal（）或EVP_CipherFinal（）的返回值指示操作是否成功。如果它并不表示成功，认证操作失败和任何输出数据绝不能因为它已损坏使用。根据指定的模式，对带有关联数据的身份验证加密（AEAD）模式的EVP接口进行了微妙的更改，并支持一些其他ctrl操作。要指定其他认证数据（AAD），应在输出参数out设置为NULL的情况下调用EVP_CipherUpdate（），EVP_EncryptUpdate（）或EVP_DecryptUpdate（）。解密时，EVP_DecryptFinal（）或EVP_CipherFinal（）的返回值指示操作是否成功。如果它并不表示成功，认证操作失败和任何输出数据绝不能因为它已损坏使用。" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tvJni"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:maxLines="5" />
+
+        <TextView
+            android:id="@+id/tvJava"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:maxLines="5" />
+
+
+        <Button
+            android:id="@+id/btn_des3_cbc_encrypt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="DES3-CBC_加密" />
+
+
+
+        <Button
+            android:id="@+id/btn_des3_cbc_decrypt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="DES3-CBC_解密" />
+
+
+    </LinearLayout>
+</ScrollView>

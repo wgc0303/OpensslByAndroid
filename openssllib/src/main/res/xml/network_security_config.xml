@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+           
+    <base-config cleartextTrafficPermitted="true"/>  <!--android 9及以上访问非https连接需要配置该内容-->
+       
+</network-security-config>

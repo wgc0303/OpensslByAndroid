@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+    <Button
+        android:id="@+id/btnBase64"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Base64测试" />
+    <Button
+        android:id="@+id/btnAES"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AES测试" />
+
+    <Button
+        android:id="@+id/btnDES"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DES3测试" />
+
+    <Button
+        android:id="@+id/btnRSA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RSA测试" />
+
+
+    <Button
+        android:id="@+id/btnTestPermission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="权限测试" />
+
+    <Button
+        android:id="@+id/btnH5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="H5认证测试" />
+
+</LinearLayout>
