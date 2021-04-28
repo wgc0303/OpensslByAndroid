@@ -42,7 +42,7 @@ jbyteArray sm4CbcEncrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArr
     //EVP_CIPHER_CTX_set_padding(ctx,EVP_PADDING_PKCS7);
 
     LOGD("SM4->指定加密算法，初始化加密key/iv");
-    EVP_EncryptInit_ex(ctx, EVP_sms4_cbc(), nullptr, (const unsigned char *) keys,
+    EVP_EncryptInit_ex(ctx, EVP_sm4_cbc(), nullptr, (const unsigned char *) keys,
                        reinterpret_cast<const unsigned char *>(iv));
     LOGD("SM4->对数据进行加密运算");
     EVP_EncryptUpdate(ctx, out, &outlen, (const unsigned char *) src, src_Len);
@@ -95,7 +95,7 @@ jbyteArray sm4CbcDecrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArr
     //EVP_CIPHER_CTX_set_padding(ctx,EVP_PADDING_PKCS7);
 
     LOGD("SM4->指定解密算法，初始化解密key/iv");
-    EVP_DecryptInit_ex(ctx, EVP_sms4_cbc(), nullptr, (const unsigned char *) keys,
+    EVP_DecryptInit_ex(ctx, EVP_sm4_cbc(), nullptr, (const unsigned char *) keys,
                        (const unsigned char *) iv);
     LOGD("SM4->对数据进行解密运算");
     EVP_DecryptUpdate(ctx, out, &outlen, (const unsigned char *) src, src_Len);
