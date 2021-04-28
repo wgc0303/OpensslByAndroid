@@ -8,37 +8,13 @@
  * 
  * </pre>
  */
-//
-//
 
-#include <jni.h>
+#include <ctyptoHeader/AesUtils.h>
 #include <string>
 #include "openssl/ossl_typ.h"
 #include "openssl/evp.h"
 #include "LogUtils.cpp"
 #include "openssl/buffer.h"
-#include "openssl/md5.h"
-
-/**
- * AES-CBC-128加密
- */
-static jbyteArray aesCbcEncrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArray src_);
-
-/**
- * AES-CBC-128解密
- */
-static jbyteArray aesCbcDecrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArray src_);
-
-/**
- * AES-ECB-128加密
- */
-static jbyteArray aesEcbEncrypt(JNIEnv *env, jbyteArray keys_, jbyteArray src_);
-
-/**
- * AES-ECB-128解密
- */
-static jbyteArray aesEcbDecrypt(JNIEnv *env, jbyteArray keys_, jbyteArray src_);
-
 
 /**
  * AES-CBC-128加密
@@ -48,7 +24,7 @@ static jbyteArray aesEcbDecrypt(JNIEnv *env, jbyteArray keys_, jbyteArray src_);
  * @param src_
  * @return
  */
-static jbyteArray aesCbcEncrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArray src_) {
+ jbyteArray aesCbcEncrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArray src_) {
     LOGD("AES CBC:      对称密钥，也就是说加密和解密用的是同一个密钥");
     jbyte *keys = env->GetByteArrayElements(keys_, nullptr);
     jbyte *src = env->GetByteArrayElements(src_, nullptr);
@@ -103,7 +79,7 @@ static jbyteArray aesCbcEncrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, j
  * @param src_
  * @return
  */
-static jbyteArray aesCbcDecrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArray src_) {
+ jbyteArray aesCbcDecrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArray src_) {
     LOGD("AES CBC:      对称密钥，也就是说加密和解密用的是同一个密钥");
     jbyte *keys = env->GetByteArrayElements(keys_, nullptr);
     jbyte *src = env->GetByteArrayElements(src_, nullptr);
@@ -158,7 +134,7 @@ static jbyteArray aesCbcDecrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, j
  * @param src_
  * @return
  */
-static jbyteArray aesEcbEncrypt(JNIEnv *env, jbyteArray keys_, jbyteArray src_) {
+ jbyteArray aesEcbEncrypt(JNIEnv *env, jbyteArray keys_, jbyteArray src_) {
     LOGD("AES ECB:      对称密钥，也就是说加密和解密用的是同一个密钥");
     jbyte *keys = env->GetByteArrayElements(keys_, nullptr);
     jbyte *src = env->GetByteArrayElements(src_, nullptr);
@@ -211,7 +187,7 @@ static jbyteArray aesEcbEncrypt(JNIEnv *env, jbyteArray keys_, jbyteArray src_) 
  * @param src_
  * @return
  */
-static jbyteArray aesEcbDecrypt(JNIEnv *env, jbyteArray keys_, jbyteArray src_) {
+ jbyteArray aesEcbDecrypt(JNIEnv *env, jbyteArray keys_, jbyteArray src_) {
     LOGD("AES ECB:      对称密钥，也就是说加密和解密用的是同一个密钥");
     jbyte *keys = env->GetByteArrayElements(keys_, nullptr);
     jbyte *src = env->GetByteArrayElements(src_, nullptr);

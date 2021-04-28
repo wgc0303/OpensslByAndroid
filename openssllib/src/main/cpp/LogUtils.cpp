@@ -8,8 +8,6 @@
  * 
  * </pre>
  */
-//
-//
 
 #include <android/log.h>
 

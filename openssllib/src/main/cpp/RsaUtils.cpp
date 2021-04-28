@@ -14,22 +14,9 @@
 #include <openssl/rsa.h>
 #include <openssl/pem.h>
 #include "LogUtils.cpp"
+#include "ctyptoHeader/RsaUtils.h"
 
 #define KEY_LENGTH  1024
-
-static jbyteArray publicKeyEncrypt(JNIEnv *env, jbyteArray publicKeys_, jbyteArray src_);
-
-static jbyteArray privateKeyEncrypt(JNIEnv *env, jbyteArray privateKeys_, jbyteArray src_);
-
-static jbyteArray privateKeyDecrypt(JNIEnv *env, jbyteArray privateKeys_, jbyteArray src_);
-
-static jbyteArray publicKeyDecrypt(JNIEnv *env, jbyteArray publicKeys_, jbyteArray src_);
-
-static jbyteArray privateKeySign(JNIEnv *env, jbyteArray privateKeys_, jbyteArray src_);
-
-static jint publicKeyVerify(JNIEnv *env, jbyteArray publicKeys_, jbyteArray src_, jbyteArray sign_);
-
-static void generateRSAKey();
 
 
 /**
@@ -39,7 +26,7 @@ static void generateRSAKey();
  * @param src_
  * @return
  */
-static jbyteArray publicKeyEncrypt(JNIEnv *env, jbyteArray publicKeys_, jbyteArray src_) {
+jbyteArray publicKeyEncrypt(JNIEnv *env, jbyteArray publicKeys_, jbyteArray src_) {
     LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
     jbyte *keys = env->GetByteArrayElements(publicKeys_, nullptr);
     jbyte *src = env->GetByteArrayElements(src_, nullptr);
@@ -112,7 +99,7 @@ static jbyteArray publicKeyEncrypt(JNIEnv *env, jbyteArray publicKeys_, jbyteArr
  * @param src_
  * @return
  */
-static jbyteArray privateKeyEncrypt(JNIEnv *env, jbyteArray privateKeys_, jbyteArray src_) {
+jbyteArray privateKeyEncrypt(JNIEnv *env, jbyteArray privateKeys_, jbyteArray src_) {
     LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
     jbyte *keys = env->GetByteArrayElements(privateKeys_, nullptr);
     jbyte *src = env->GetByteArrayElements(src_, nullptr);
@@ -183,7 +170,7 @@ static jbyteArray privateKeyEncrypt(JNIEnv *env, jbyteArray privateKeys_, jbyteA
  * @param src_
  * @return
  */
-static jbyteArray privateKeyDecrypt(JNIEnv *env, jbyteArray privateKeys_, jbyteArray src_) {
+jbyteArray privateKeyDecrypt(JNIEnv *env, jbyteArray privateKeys_, jbyteArray src_) {
     LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
     jbyte *keys = env->GetByteArrayElements(privateKeys_, nullptr);
     jbyte *src = env->GetByteArrayElements(src_, nullptr);
@@ -254,7 +241,7 @@ static jbyteArray privateKeyDecrypt(JNIEnv *env, jbyteArray privateKeys_, jbyteA
  * @param src_
  * @return
  */
-static jbyteArray publicKeyDecrypt(JNIEnv *env, jbyteArray publicKeys_, jbyteArray src_) {
+jbyteArray publicKeyDecrypt(JNIEnv *env, jbyteArray publicKeys_, jbyteArray src_) {
     LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
     jbyte *keys = env->GetByteArrayElements(publicKeys_, nullptr);
     jbyte *src = env->GetByteArrayElements(src_, nullptr);
@@ -326,7 +313,7 @@ static jbyteArray publicKeyDecrypt(JNIEnv *env, jbyteArray publicKeys_, jbyteArr
  * @param src_
  * @return
  */
-static jbyteArray privateKeySign(JNIEnv *env, jbyteArray privateKeys_, jbyteArray src_) {
+jbyteArray privateKeySign(JNIEnv *env, jbyteArray privateKeys_, jbyteArray src_) {
     LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
     jbyte *keys = env->GetByteArrayElements(privateKeys_, nullptr);
     jbyte *src = env->GetByteArrayElements(src_, nullptr);
@@ -378,7 +365,7 @@ static jbyteArray privateKeySign(JNIEnv *env, jbyteArray privateKeys_, jbyteArra
  * @param sign_ 加签内容
  * @return
  */
-static jint
+jint
 publicKeyVerify(JNIEnv *env, jbyteArray publicKeys_, jbyteArray src_, jbyteArray sign_) {
     LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
     jbyte *keys = env->GetByteArrayElements(publicKeys_, nullptr);
@@ -419,7 +406,7 @@ publicKeyVerify(JNIEnv *env, jbyteArray publicKeys_, jbyteArray src_, jbyteArray
     return ret;
 }
 
-static void generateRSAKey() {
+void generateRSAKey() {
     // 公私密钥对
     size_t pri_len;
     size_t pub_len;
@@ -429,7 +416,7 @@ static void generateRSAKey() {
     BIGNUM *bne = BN_new();
     BN_set_word(bne, RSA_F4);
     // 生成密钥对
-    RSA_generate_key_ex(keypair,KEY_LENGTH, bne, nullptr);
+    RSA_generate_key_ex(keypair, KEY_LENGTH, bne, nullptr);
 
     BIO *pri = BIO_new(BIO_s_mem());
     BIO *pub = BIO_new(BIO_s_mem());

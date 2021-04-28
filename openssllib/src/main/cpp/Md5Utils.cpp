@@ -2,29 +2,24 @@
  * <pre>
  *
  *     author : wgc
- *     time   : 2020/06/11
+ *     time   : 2021/04/27
  *     desc   :
  *     version: 1.0
  * 
  * </pre>
  */
 
-#include <jni.h>
+#include "ctyptoHeader/Md5Utils.h"
 #include <string>
 #include "LogUtils.cpp"
 #include "openssl/md5.h"
 
 /**
- * md5加密
- */
-static jstring md5(JNIEnv *env, jbyteArray src_);
-
-/**
- * md5 加密
+ * md5摘要
  * @param src_
  * @return hexString
  */
-static jstring md5(JNIEnv *env, jbyteArray src_) {
+jstring md5(JNIEnv *env, jbyteArray src_) {
     LOGD("MD5->信息摘要算法第五版");
     jbyte *src = env->GetByteArrayElements(src_, nullptr);
     jsize src_Len = env->GetArrayLength(src_);
@@ -54,3 +49,5 @@ static jstring md5(JNIEnv *env, jbyteArray src_) {
 
     return env->NewStringUTF(hex);
 }
+
+

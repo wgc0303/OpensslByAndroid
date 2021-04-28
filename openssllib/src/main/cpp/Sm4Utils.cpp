@@ -10,19 +10,10 @@
  */
 
 #include "openssl/evp.h"
-#include "jni.h"
+#include "ctyptoHeader/Sm4Utils.h"
 #include "LogUtils.cpp"
 #include "string"
 
-/**
- * sm4cbc加密
- */
-static jbyteArray sm4CbcEncrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArray src_);
-
-/**
- * sm4cbc解密
- */
-static jbyteArray sm4CbcDecrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArray src_);
 
 /**
  * sm4cbc加密
@@ -32,7 +23,7 @@ static jbyteArray sm4CbcDecrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, j
  * @param src_
  * @return
  */
-static jbyteArray sm4CbcEncrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArray src_) {
+jbyteArray sm4CbcEncrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArray src_) {
     LOGD("SM4->对称密钥，也就是说加密和解密用的是同一个密钥");
     jbyte *keys = env->GetByteArrayElements(keys_, nullptr);
     jbyte *src = env->GetByteArrayElements(src_, nullptr);
@@ -85,7 +76,7 @@ static jbyteArray sm4CbcEncrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, j
  * @param src_
  * @return
  */
-static jbyteArray sm4CbcDecrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArray src_) {
+jbyteArray sm4CbcDecrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArray src_) {
     LOGD("SM4->对称密钥，也就是说加密和解密用的是同一个密钥");
     jbyte *keys = env->GetByteArrayElements(keys_, nullptr);
     jbyte *src = env->GetByteArrayElements(src_, nullptr);

@@ -13,12 +13,12 @@
 #include <LogUtils.cpp>
 #include <string>
 #include <jni.h>
-#include <CommonUtils.h>
+#include <ctyptoHeader/CommonUtils.h>
 
 /**
  * java生成的公钥转openssl 生成的公钥
  */
-static char *javaPublicKey2OpensslPublicKey(std::string strPublicKey) {
+char *javaPublicKey2OpensslPublicKey(std::string strPublicKey) {
     int nPublicKeyLen = strPublicKey.size();
     for (int i = 64; i < nPublicKeyLen; i += 64) {
         if (strPublicKey[i] != '\n') {
@@ -37,7 +37,7 @@ static char *javaPublicKey2OpensslPublicKey(std::string strPublicKey) {
 /**
  * java生成的私钥转openssl 生成的私钥
  */
-static char *javaPrivateKey2OpensslPrivateKey(std::string strPrivateKey) {
+char *javaPrivateKey2OpensslPrivateKey(std::string strPrivateKey) {
     int nPrivateKeyLen = strPrivateKey.size();
     for (int i = 64; i < nPrivateKeyLen; i += 64) {
         if (strPrivateKey[i] != '\n') {
@@ -56,7 +56,7 @@ static char *javaPrivateKey2OpensslPrivateKey(std::string strPrivateKey) {
 /**
  * c++ string转jstring
  */
-static jstring str2jstring(JNIEnv *env, const char *pat) {
+jstring str2jstring(JNIEnv *env, const char *pat) {
     //定义java String类 strClass
     jclass strClass = (env)->FindClass("java/lang/String");
     //获取String(byte[],String)的构造器,用于将本地byte[]数组转换为一个新String
@@ -74,7 +74,7 @@ static jstring str2jstring(JNIEnv *env, const char *pat) {
 /**
  * jstring转c++ string
  */
-static std::string jstring2str(JNIEnv *env, jstring jstr) {
+std::string jstring2str(JNIEnv *env, jstring jstr) {
     char *rtn = nullptr;
     jclass clsstring = env->FindClass("java/lang/String");
     jstring strencode = env->NewStringUTF("utf-8");
@@ -96,7 +96,7 @@ static std::string jstring2str(JNIEnv *env, jstring jstr) {
 /**
  * int数组转jbyteArray 主要用于密钥的转换
  */
-static jbyteArray intArray2jbyteArray(JNIEnv *env, const int array[], jsize keyLen) {
+jbyteArray intArray2jbyteArray(JNIEnv *env, const int array[], jsize keyLen) {
     char *keys = new char[keyLen];
     for (int i = 0; i < keyLen; i++) {
         keys[i] = static_cast<char>(array[i] );
@@ -112,7 +112,7 @@ static jbyteArray intArray2jbyteArray(JNIEnv *env, const int array[], jsize keyL
  * 分段打印密钥数组
  * @param keyChar
  */
-static void printJniKey2JniIntArray(char *keyChar) {
+void printJniKey2JniIntArray(char *keyChar) {
     int len = strlen(keyChar);
     std::string keyString;
     for (int i = 0; i < len; i++) {
@@ -144,7 +144,7 @@ static void printJniKey2JniIntArray(char *keyChar) {
  * @param context
  * @return
  */
-static bool checkPermission(JNIEnv *env, jobject context) {
+bool checkPermission(JNIEnv *env, jobject context) {
     jclass contextClass = env->GetObjectClass(context);
     jmethodID getApplicationContextMethod = env->GetMethodID(contextClass, "getApplicationContext",
                                                              "()Landroid/content/Context;");
@@ -235,7 +235,7 @@ static bool checkPermission(JNIEnv *env, jobject context) {
  * jbyteArray转char
  * 调用该方法后如果不是返回java层需free(chars);
  */
-static char *convertJByteArrayToChars(JNIEnv *env, jbyteArray byteArray) {
+char *convertJByteArrayToChars(JNIEnv *env, jbyteArray byteArray) {
     char *chars = nullptr;
     jbyte *bytes;
     bytes = env->GetByteArrayElements(byteArray, nullptr);
@@ -251,7 +251,7 @@ static char *convertJByteArrayToChars(JNIEnv *env, jbyteArray byteArray) {
  * char转jbyteArray
  * 调用该方法后如果不是返回java层需调用env->DeleteLocalRef(content);
  */
-static jbyteArray convertCharToJByteArray(JNIEnv *env, const char *src) {
+jbyteArray convertCharToJByteArray(JNIEnv *env, const char *src) {
     jsize len = strlen(src);
     jbyteArray content = env->NewByteArray(len);
     env->SetByteArrayRegion(content, 0, len, reinterpret_cast<const jbyte *>(src));
@@ -265,7 +265,7 @@ static jbyteArray convertCharToJByteArray(JNIEnv *env, const char *src) {
  * @param dest  目标字符
  * @param sourceLen 原字符长度
  */
-static void byteToHexStr(const unsigned char *source, char *dest, int sourceLen) {
+void byteToHexStr(const unsigned char *source, char *dest, int sourceLen) {
     short i;
     unsigned char highByte, lowByte;
 
@@ -295,7 +295,7 @@ static void byteToHexStr(const unsigned char *source, char *dest, int sourceLen)
  * @param dest  目标字符
  * @param sourceLen 原字符长度
  */
-static void hexStrToByte(const char *source, unsigned char *dest, int sourceLen) {
+void hexStrToByte(const char *source, unsigned char *dest, int sourceLen) {
     short i;
     unsigned char highByte, lowByte;
 

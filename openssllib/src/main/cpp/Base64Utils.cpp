@@ -13,20 +13,9 @@
 #include <openssl/evp.h>
 #include <openssl/bio.h>
 #include <openssl/buffer.h>
+#include <ctyptoHeader/Base64Utils.h>
 #include <string>
 #include <iostream>
-
-
-/**
- * base64解码
- */
-static char *base64Decode(const char *input, int length, bool newLine);
-
-/**
- * base64 编码
- */
-static char *base64Encode(const char *buffer, int length, bool newLine);
-
 
 /**
  * base64编码
@@ -35,7 +24,7 @@ static char *base64Encode(const char *buffer, int length, bool newLine);
  * @param newLine  是否换行
  * @return  编码后内容
  */
-static char *base64Encode(const char *buffer, int length, bool newLine) {
+char *base64Encode(const char *buffer, int length, bool newLine) {
     BIO *bmem = nullptr;
     BIO *b64 = nullptr;
     BUF_MEM *bptr;
@@ -63,7 +52,7 @@ static char *base64Encode(const char *buffer, int length, bool newLine) {
  * @param newLine  是否换行
  * @return  解码后内容
  */
-static char *base64Decode(const char *input, int length, bool newLine) {
+char *base64Decode(const char *input, int length, bool newLine) {
     BIO *b64 = nullptr;
     BIO *bmem = nullptr;
     char *buffer = (char *) malloc(length);

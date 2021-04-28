@@ -9,39 +9,35 @@
  * </pre>
  */
 
-#include <jni.h>
+#include <ctyptoHeader/Sm3Utils.h>
 #include <string>
 #include "LogUtils.cpp"
 #include "openssl/evp.h"
 #include "openssl/sm3.h"
+#include "ctyptoHeader/CommonUtils.h"
 #include<iostream>
-#include "CommonUtils.h"
+
+
 
 /**
- * SM3 摘要算法
+ * SM3 摘要算法 sm3.h中提供的方法实现
+ * @param src_
+ * @return hexString
  */
-static jstring sm3Digest(JNIEnv *env, jbyteArray src_);
-
-///**
-// * SM3 摘要算法 sm3.h中提供的方法实现
-// * @param src_
-// * @return hexString
-// */
-//static jstring sm3Digest(JNIEnv *env,jbyteArray src_) {
+// jstring sm3Digest(JNIEnv *env,jbyteArray src_) {
 //    LOGD("SM3->信息摘要算法");
 //    char *src = convertJByteArrayToChars(env, src_);
 //    jsize src_Len = strlen(src);
 //
-//    unsigned char digest[SM3_BLOCK_SIZE];
+//    unsigned char digest[SM3_DIGEST_LENGTH];
 //    sm3_ctx_t ctx;
 //    sm3_init(&ctx);
 //    LOGD("SM3->进行SM3信息摘要运算");
 //    sm3_update(&ctx, reinterpret_cast<const unsigned char *>(src), src_Len);
 //    sm3_final( &ctx,digest);
-//
 //    LOGD("SM3->摘要数据转hex");
 //    char out[1024] = { 0 };
-//    byteToHexStr(digest,out,strlen(reinterpret_cast<const char *const>(digest)));
+//    byteToHexStr(digest,out,sizeof(digest));
 //    free(src);
 //    return env->NewStringUTF(out);
 //}
@@ -52,13 +48,12 @@ static jstring sm3Digest(JNIEnv *env, jbyteArray src_);
  * @param src_
  * @return hexString
  */
-static jstring sm3Digest(JNIEnv *env, jbyteArray src_) {
+jstring sm3Digest(JNIEnv *env, jbyteArray src_) {
     LOGD("SM3->信息摘要算法");
     char *src = convertJByteArrayToChars(env, src_);
     jsize src_Len = strlen(src);
-
     unsigned int len;
-    unsigned char digest[SM3_BLOCK_SIZE];
+    unsigned char digest[SM3_DIGEST_LENGTH];
     EVP_MD_CTX *md_ctx = EVP_MD_CTX_new();
     LOGD("SM3->初始化摘要结构体");
     EVP_MD_CTX_init(md_ctx);
@@ -71,8 +66,8 @@ static jstring sm3Digest(JNIEnv *env, jbyteArray src_) {
     EVP_MD_CTX_free(md_ctx);
     free(src);
     LOGD("SM3->摘要数据转hex");
-    char out[1024] = { 0 };
-    byteToHexStr(digest,out,len);
+    char out[1024] = {0};
+    byteToHexStr(digest, out, len);
 
     return env->NewStringUTF(out);
 }

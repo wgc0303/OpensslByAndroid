@@ -10,20 +10,11 @@
  */
 
 #include "openssl/evp.h"
-#include "jni.h"
+#include "ctyptoHeader/DesUtils.h"
 #include "LogUtils.cpp"
 #include "openssl/des.h"
 #include "string"
 
-/**
- * des3cbc加密
- */
-static jbyteArray des3CbcEncrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArray src_);
-
-/**
- * des3cbc解密
- */
-static jbyteArray des3CbcDecrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArray src_);
 
 /**
  * des3cbc加密
@@ -33,7 +24,7 @@ static jbyteArray des3CbcDecrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, 
  * @param src_
  * @return
  */
-static jbyteArray des3CbcEncrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArray src_) {
+jbyteArray des3CbcEncrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArray src_) {
     LOGD("DES->对称密钥，也就是说加密和解密用的是同一个密钥");
     jbyte *keys = env->GetByteArrayElements(keys_, nullptr);
     jbyte *src = env->GetByteArrayElements(src_, nullptr);
@@ -86,7 +77,7 @@ static jbyteArray des3CbcEncrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, 
  * @param src_
  * @return
  */
-static jbyteArray des3CbcDecrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArray src_) {
+jbyteArray des3CbcDecrypt(JNIEnv *env, jbyteArray keys_, jbyteArray iv_, jbyteArray src_) {
     LOGD("DES->对称密钥，也就是说加密和解密用的是同一个密钥");
     jbyte *keys = env->GetByteArrayElements(keys_, nullptr);
     jbyte *src = env->GetByteArrayElements(src_, nullptr);
