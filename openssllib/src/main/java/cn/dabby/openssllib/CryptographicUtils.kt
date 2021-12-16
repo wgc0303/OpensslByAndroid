@@ -187,23 +187,4 @@ class CryptographicUtils {
         content: ByteArray?
     ): ByteArray?
 
-
-    external fun sm4CbcEncrypt2ByteArray(
-        key: ByteArray?,
-        iv: ByteArray?,
-        content: ByteArray?
-    ): ByteArray?
-
-
-    external fun sm4CbcDecrypt2ByteArray(
-        key: ByteArray?,
-        iv: ByteArray?,
-        content: ByteArray?
-    ): ByteArray?
-
-
-    external fun sm3Digest2HexString(
-        content: ByteArray?
-    ): String?
-
 }

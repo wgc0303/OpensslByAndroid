@@ -16,11 +16,16 @@
 #include "ctyptoHeader/CommonUtils.h"
 #include "ctyptoHeader/Base64Utils.h"
 #include "ctyptoHeader/DesUtils.h"
-#include "ctyptoHeader/Sm4Utils.h"
-#include "ctyptoHeader/Sm3Utils.h"
 #include "LogUtils.cpp"
 #include "ctyptoHeader/Md5Utils.h"
 
+#include "openssl/ec.h"
+#include "openssl/obj_mac.h"
+
+int test_sm2_crypt(JNIEnv *env, const EC_GROUP *group,
+                   const EVP_MD *digest,
+                   const char *privkey_hex,
+                   const char *message);
 
 /*****************************************AES测试**************************************************/
 extern "C" JNIEXPORT jbyteArray JNICALL
@@ -108,7 +113,7 @@ Java_cn_dabby_openssllib_CryptographicUtils_rsaPrivateKeyEncrypt2ByteArray(JNIEn
     std::string strPrivateKey = jstring2str(env, key);
     char *keyChar = javaPrivateKey2OpensslPrivateKey(strPrivateKey);
     //打印成数组形式
-     printJniKey2JniIntArray(keyChar);
+    printJniKey2JniIntArray(keyChar);
 
     int len = strlen(keyChar);
     jbyteArray ivArray = env->NewByteArray(len);
@@ -257,36 +262,3 @@ Java_cn_dabby_openssllib_CryptographicUtils_des3CbcDecrypt2ByteArray(JNIEnv *env
 
 }
 /*****************************************DES测试**************************************************/
-
-
-
-extern "C" JNIEXPORT jbyteArray JNICALL
-Java_cn_dabby_openssllib_CryptographicUtils_sm4CbcEncrypt2ByteArray(JNIEnv *env, jobject instance,
-                                                                    jbyteArray key, jbyteArray iv,
-                                                                    jbyteArray content) {
-    return sm4CbcEncrypt(env, key, iv, content);
-
-}
-
-extern "C" JNIEXPORT jbyteArray JNICALL
-Java_cn_dabby_openssllib_CryptographicUtils_sm4CbcDecrypt2ByteArray(JNIEnv *env, jobject instance,
-                                                                    jbyteArray key, jbyteArray iv,
-                                                                    jbyteArray content) {
-//    const char *key_ = "d843o01ad843o01ad843o01a";
-//    const char *iv_ = "d843o01b";
-//    jbyteArray k = ConvertCharToJByteArray(env, key_);
-//    jbyteArray i = ConvertCharToJByteArray(env, iv_);
-//    jbyteArray src = des3CbcDecrypt(env, k, i, content);
-//    env->DeleteLocalRef(k);
-//    env->DeleteLocalRef(i);
-//    return src;
-    return sm4CbcDecrypt(env, key, iv, content);
-
-}
-
-
-extern "C" JNIEXPORT jstring JNICALL
-Java_cn_dabby_openssllib_CryptographicUtils_sm3Digest2HexString(JNIEnv *env, jobject instance,
-                                                                jbyteArray content) {
-    return sm3Digest(env, content);
-}

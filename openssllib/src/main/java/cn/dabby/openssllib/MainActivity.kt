@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import cn.dabby.openssllib.utils.StringTool
 import kotlinx.android.synthetic.main.activity_main.*
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
@@ -28,12 +29,17 @@ class MainActivity : AppCompatActivity() {
     private val permissions = arrayOf(
         Manifest.permission.CAMERA,
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.RECORD_AUDIO
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+//        val byteHexToSting = StringTool.byteHexToSting("encryption standard".toByteArray())
+        val byteHexToSting = StringTool.getStringByBytes("encryption standard".toByteArray())
+        Log.d("wgc","byteHexToSting     $byteHexToSting"  )
         btnBase64.setOnClickListener {
             startActivity(Intent(this@MainActivity, Base64Activity::class.java))
         }
@@ -83,20 +89,6 @@ class MainActivity : AppCompatActivity() {
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }
-
-
-        val cryptographicUtils = CryptographicUtils()
-
-        val key = byteArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8)
-        val iv = byteArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8)
-        val bytes =
-            cryptographicUtils.sm4CbcEncrypt2ByteArray(key, iv, "01234567".toByteArray())
-        val sm4CbcDecrypt2ByteArray = cryptographicUtils.sm4CbcDecrypt2ByteArray(key, iv, bytes)
-        val string = String(sm4CbcDecrypt2ByteArray!!, StandardCharsets.UTF_8)
-        Log.d("wgc","解密后数据:$string")
-
-        val sm3Digest2HexString = cryptographicUtils.sm3Digest2HexString("abc".toByteArray())
-        Log.d("wgc","sm3Digest2HexString:   $sm3Digest2HexString")
     }
 
 

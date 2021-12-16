@@ -23,14 +23,15 @@ import kotlinx.android.synthetic.main.activity_rsa.*
 class RsaActivity : AppCompatActivity() {
     private val cryptographicUtils = CryptographicUtils()
     private val TAG = "WGCTEST"
-    private var TEST_DATA =
-        "13bcdfasg5456!@#$%^&*()_+=~`/"
+    private var TEST_DATA = "13bcdfasg5456!@#\$%^&*()_+=~`/"
+// private var TEST_DATA =
+//        "13bcdfasg5456!@#$%^&*()_+=~`/iXSgGUjp9zCFtKzWqQaiHgqUKyyW2XvrR70JVTwms4mwiZR678JVvCb3P3tM+6Xv/f42dN+9I7IbhdRGP2emEqLFUTOkUFYz0NJYl2aW4ea3cMFgkzf9KuvNRE1OhOKVZvhhRcj6GgEXgq+Op+syqQXQpvDOsTRhkSxXIGBcTTs=iXSgGUjp9zCFtKzWqQaiHgqUKyyW2XvrR70JVTwms4mwiZR678JVvCb3P3tM+6Xv/f42dN+9I7IbhdRGP2emEqLFUTOkUFYz0NJYl2aW4ea3cMFgkzf9KuvNRE1OhOKVZvhhRcj6GgEXgq+Op+syqQXQpvDOsTRhkSxXIGBcTTs="
 
     private val TEST_PRIVATE_KEY =
-        "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAPabGdxBKjw4Lm39PbVuWRDfjbRdeA1tJiGeK2yL9ix+apKIsKBBBczu/zwzVpbTfV16IcW9AsX0ho0Bgx9Uvlh7uLxsVdcVHNna/hmKVO3A4NPifD1l9aZRRyBKJHHHap+Nh0lPlYFJg2qHzGyEPGjsB8rh/ddneLDGlKzPij7VAgMBAAECf2+yGceEsFNxsTRpc0zeogsOpDi4NZv3lylBYoIdE4fvD6uYbrDqMFTfKFpxYEC/ol4WC8g7Te3hikzl9LrzCMkzmu3Dh56tO4WMufO+bxYbEGv8fvacmXCuJNRn9mCD6Hg0MWCHA7sUpS/HwwnWOkY+EcCL4/kpHDl0qhx/nXUCQQD/16VYL9opZonpkZzyhnHwKs3cBYEkWpBtC0Srz5cBde6xUuBed1hOFIJHs2ccYW1Wyqvyhisu6gxhmnBd8qeLAkEA9sH/jiRns3nyv/0y6FPaMK5XLpiYKwV4oBRbt+rVTZRRJtvd1kkCm8XJxK35kg6sU2b51Js3g9vNF9guu15/HwJBAMj1hGTuwXh/mJikzhkaTekOVkEa+cOqd4OPtFMYbk6xadpTdPX+3JgIOAVGABok1RO1graveMATC8Km4tiIv90CQQCqRa35wMdKQqEuuCJzzMDoDLWeMq/2J91X4RR1Mfekg+8HuHo4jsLdCLu1GzP3BGcHWiyU99J0C61XgdaldoyTAkEAp7AaM+DQe43JandnmKiMRT23OLc5gglQ0AmLudb3Gw+qLK4CcAt4/D0cpNMb4jO8Iqgv2mOHtV39ll/CiEaHCw=="
+        "MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAI/1zC9syNbSYt+vJJnnbkOnKK9vhnzKjxpmpiNhT1ABCFaiI3V+8dMdDk/ZOG/Tsk1FrTHJ/84uBf9sjhEJ/SvzWaEeKVz+0fkET2QzrD88tLdH1Jm+W5SFYFMcpe97zwgpPthxc+sxgEhjMH+z8FraDdsYAmE+B9paYTySxDbNAgMBAAECf1aZhjsBNdAEv3XP5jSvA6Wu6MqgTEbFk1BOb6LY5t05wcpbvvjvZIma8QEXqtuafaf+QjGxUjC1fuYoZ03YtHLUGVtqD0r1L6rfEBJteWBFXTD7ttwyiWBUISsoaZkmJ7RUQfX19gnnXItc8na6QKV/QWKV4KWv7eHI/xHYYkECQQDRbGO6QKibqLekf9cDKbjBnKwtCSYxx+1gY57sMgbf6rrx5gS3RUN3nW7zAU72URZ5Fjp/yzStQvxeRdM++rJFAkEAr/o63+Q0W7ctVJ9wHVD7RKs5EqPQyWx3KSIccFFnrOzbX05fACFbe7biNS96bKOh4srwpr1vyFSLV7zmRBJ+6QJBALmv7nkNrbJfFX2g8IdYbf4VqcBA1YHcMEh/7ECnVtshqOKlPdc2bczYZbDHnzjdyxxQLkxzY+CgfV4lcVntNTUCQHVdoXiDXbwxniULNR4ITZzNyYG6Cdzc31hqrKboVAoL6n9U6J1QohAPuCyanr7oH2b/zKKYQ35LjKeWj8ikwUkCQQCedapZwf+PjmxG461iniioUVdG4HMNM8HQVWD97DvUMgYJNaysfYvNR4dzWVBRhRDNVzRwFKrEl1Sn9A4YAQlu"
 
     private val TEST_PUBLIC_KEY =
-        "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQD2mxncQSo8OC5t/T21blkQ3420XXgNbSYhnitsi/YsfmqSiLCgQQXM7v88M1aW031deiHFvQLF9IaNAYMfVL5Ye7i8bFXXFRzZ2v4ZilTtwODT4nw9ZfWmUUcgSiRxx2qfjYdJT5WBSYNqh8xshDxo7AfK4f3XZ3iwxpSsz4o+1QIDAQAB"
+        "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCAqDuIwASiaWAb9MoRQmCe2NPGQrsa/QK0wc5wz3oZaA8U8mDAEtkZTip2ij6a3uJb7v1hrE5+Sod5ymkLn278G9o5ZunNZxxBh366ED23v8FYX9fIU9zEiKQJvztUMqPG7d041S1kHc2ke0bKsllxUmyguHUKoSpcmBF9SKJEzQIDAQAB"
 
 
     private var jniRsaPublicKeyEncryptString = ""
@@ -116,7 +117,7 @@ class RsaActivity : AppCompatActivity() {
         tvJni.text = "jniRsaPublicKeyEncrypt加密：$jniRsaPublicKeyEncryptString"
         val start1 = System.currentTimeMillis()
 
-        javaRsaPublicKeyEncryptString = RSAUtil.encrypt(TEST_PUBLIC_KEY, TEST_DATA)
+//        javaRsaPublicKeyEncryptString = RSAUtil.encrypt(TEST_PUBLIC_KEY, TEST_DATA)
 
         Log.d("wgc", "耗时${System.currentTimeMillis() - start1}")
 
@@ -168,13 +169,16 @@ class RsaActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun compare2RSAPrivateKeySign() {
         val start = System.currentTimeMillis()
-        val rsaPrivateKeySign2ByteArray = cryptographicUtils.rsaPrivateKeySign2ByteArray(
-            TEST_PRIVATE_KEY,
-            TEST_DATA.toByteArray()
-        )
-        Log.d("wgc", "耗时${System.currentTimeMillis() - start}")
-        jniRsaPrivateKeySignString =
-            Base64.encodeToString(rsaPrivateKeySign2ByteArray, Base64.NO_WRAP)
+        for (i in 1..20) {
+            compare2RSAPublicKeyEncrypt()
+            val rsaPrivateKeySign2ByteArray = cryptographicUtils.rsaPrivateKeySign2ByteArray(
+                TEST_PRIVATE_KEY,
+                TEST_DATA.toByteArray()
+            )
+            Log.d("wgc", "耗时${System.currentTimeMillis() - start}")
+            jniRsaPrivateKeySignString =
+                Base64.encodeToString(rsaPrivateKeySign2ByteArray, Base64.NO_WRAP)
+        }
         tvJni.text = "jniRsaPrivateKey加签：$jniRsaPrivateKeySignString"
         Log.d("wgc", "jniRsaPrivateKeySignString:${jniRsaPrivateKeySignString}")
         val start1 = System.currentTimeMillis()

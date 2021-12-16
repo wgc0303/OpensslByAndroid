@@ -15,6 +15,18 @@
 #include <jni.h>
 #include <ctyptoHeader/CommonUtils.h>
 
+#include <openssl/bio.h>
+#include <openssl/evp.h>
+#include <openssl/pem.h>
+#include <openssl/ec.h>
+#include <openssl/ossl_typ.h>
+#include <openssl/bn.h>
+#include <openssl/crypto.h>
+#include <openssl/opensslconf.h>
+#include <openssl/obj_mac.h>
+#include <openssl/err.h>
+#include <openssl/evp.h>
+
 /**
  * java生成的公钥转openssl 生成的公钥
  */
@@ -291,29 +303,52 @@ void byteToHexStr(const unsigned char *source, char *dest, int sourceLen) {
 
 /**
  * 十六进制字符串转换为字节流
- * @param source 原字符
- * @param dest  目标字符
- * @param sourceLen 原字符长度
+ * @param src 原字符
+ * @param dst  目标字符
  */
-void hexStrToByte(const char *source, unsigned char *dest, int sourceLen) {
-    short i;
-    unsigned char highByte, lowByte;
-
-    for (i = 0; i < sourceLen; i += 2) {
-        highByte = toupper(source[i]);
-        lowByte = toupper(source[i + 1]);
-
-        if (highByte > 0x39)
-            highByte -= 0x37;
-        else
-            highByte -= 0x30;
-
-        if (lowByte > 0x39)
-            lowByte -= 0x37;
-        else
-            lowByte -= 0x30;
-
-        dest[i / 2] = (highByte << 4) | lowByte;
+int hexStrToByte(char *dst, const char *src) {
+    while (*src) {
+        if (' ' == *src) {
+            src++;
+            continue;
+        }
+        sscanf(src, "%02X", dst);
+        src += 2;
+        dst++;
     }
-    return;
+    return 0;
+}
+
+
+void HextoChar(uint8_t *u8, uint8_t len, char *ch) {
+    uint8_t tmp = 0x00;
+    for (int i = 0; i < len; i++) {
+        for (int j = 0; j < 2; j++) {
+            tmp = (*(u8 + i) >> 4) * (1 - j) + (*(u8 + i) & 0x0F) * j;
+            if (tmp >= 0 && tmp <= 9) {
+                ch[2 * i + j] = tmp + '0';
+            } else if (tmp >= 0x0A && tmp <= 0x0F) {
+                ch[2 * i + j] = tmp - 0x0A + 'A';
+            }
+        }
+    }
+}
+
+
+// 将hexarr 转成16进制的字符串  如 0x11 0x22  转了之后是 “1122”
+std::string arr2hex(const unsigned char *arr, size_t len) {
+    size_t i;
+    std::string res;
+    char tmp[3];
+    const char *tab = "0123456789ABCDEF";
+
+    res.reserve(len * 2 + 1);
+    for (i = 0; i < len; ++i) {
+        tmp[0] = tab[arr[i] >> 4];
+        tmp[1] = tab[arr[i] & 0xf];
+        tmp[2] = '\0';
+        res.append(tmp);
+    }
+
+    return res;
 }

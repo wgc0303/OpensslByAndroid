@@ -42,7 +42,12 @@ void hexStrToByte(const char *source, unsigned char *dest, int sourceLen);
 
 void byteToHexStr(const unsigned char *source, char *dest, int sourceLen);
 
+void HextoChar(uint8_t *u8, uint8_t len, char *ch);
 
+std::string arr2hex(const unsigned char *arr, size_t len);
+// 将16进制的string字符串，转成16进制的arr
+int hexCharStr2CharStr(const char *src, unsigned long lsrc, int flag, unsigned char *out,
+                       unsigned long *lout);
 #ifdef  __cplusplus
 }
 #endif

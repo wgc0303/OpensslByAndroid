@@ -39,7 +39,7 @@ import cn.dabby.openssllib.utils.PhotoUtils;
  * </pre>
  */
 public class TestH5AuthActivity extends AppCompatActivity {
-    private String url = "https://auth.dabby.cn/fcfe/lipAuth/index.html#/guide?certtoken=4223dd0d-61a6-4b59-9d7e-2f4c3e9bc561";
+    private String url = "https://test.h5.dabby.cn/";
     private final static int PHOTO_REQUEST = 100;
     private final static int VIDEO_REQUEST = 120;
     private final static String TAG = "wgc";
@@ -73,9 +73,9 @@ public class TestH5AuthActivity extends AppCompatActivity {
             settings.setAllowContentAccess(true); // 是否可访问Content Provider的资源，默认值 true
             settings.setAllowFileAccess(true);    // 是否可访问本地文件，默认值 true
             // 是否允许通过file url加载的Javascript读取本地文件，默认值 false
-            settings.setAllowFileAccessFromFileURLs(false);
+            settings.setAllowFileAccessFromFileURLs(true);
             // 是否允许通过file url加载的Javascript读取全部资源(包括文件,http,https)，默认值 false
-            settings.setAllowUniversalAccessFromFileURLs(false);
+            settings.setAllowUniversalAccessFromFileURLs(true);
             //开启JavaScript支持
             settings.setJavaScriptEnabled(true);
             // 支持缩放
@@ -103,7 +103,7 @@ public class TestH5AuthActivity extends AppCompatActivity {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 Log.d("wgc","url:"+url);
                 if (!TextUtils.isEmpty(url)) {
-                    videoFlag = url.contains("vedio");
+                    videoFlag = url.contains("video");
                 }
                 if (url.trim().startsWith("tel")) {//特殊情况tel，调用系统的拨号软件拨号【<a href="tel:1111111111">1111111111</a>】
                     Intent i = new Intent(Intent.ACTION_VIEW);
@@ -128,6 +128,7 @@ public class TestH5AuthActivity extends AppCompatActivity {
 
         //自定义 WebChromeClient 辅助WebView处理图片上传操作【<input type=file> 文件上传标签】
         public class MyChromeWebClient extends WebChromeClient {
+
             // For Android 3.0-
             public void openFileChooser(ValueCallback<Uri> uploadMsg) {
                 Log.d(TAG, "openFileChoose(ValueCallback<Uri> uploadMsg)");
@@ -164,6 +165,7 @@ public class TestH5AuthActivity extends AppCompatActivity {
 
             // For Android 5.0+
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
             public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
                 Log.d(TAG, "onShowFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture)");
                 mUploadCallbackAboveL = filePathCallback;
