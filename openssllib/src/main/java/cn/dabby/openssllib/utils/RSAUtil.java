@@ -1,7 +1,9 @@
 package cn.dabby.openssllib.utils;
 
 import android.util.Base64;
+import android.util.Log;
 
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -27,11 +29,6 @@ import javax.crypto.Cipher;
 public class RSAUtil {
 
     /**
-     * 大白服务默认RSA公钥
-     */
-    private static final String DEFAULT_PUB_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCH6Ab+lHsgxoGIxi2UhM2aWMXWWPRUZUK9HNO4TPGxKX9iJ0Dya2er3wMBHpc3Pq7NJGzLbwdHSQEJMXt5KrepebY0/5A3/zLlu35r4GJbl2/HFnxHbPT+rWrOT1ky0+FmdGIn2rGHk1jPD1qw4NbSS2ADzip9vKtVg2OhsL7F+QIDAQAB";
-
-    /**
      * 签名算法
      */
     private static final String SIGN_ALGORITHMS = "SHA1WithRSA";
@@ -52,9 +49,17 @@ public class RSAUtil {
 
         // 得到私钥
         RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+        BigInteger privateD = privateKey.getPrivateExponent();
+        BigInteger n = privateKey.getModulus();
+        String s = UtilTool.byteHexToSting(privateD.toByteArray());
+        Log.d("wgc","私钥 D "+s);
+        Log.d("wgc","私钥 N "+UtilTool.byteHexToSting(n.toByteArray()));
         // 得到公钥
         RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
-
+        BigInteger publicD = publicKey.getPublicExponent();
+        BigInteger e = publicKey.getModulus();
+        Log.d("wgc","公钥 D "+UtilTool.byteHexToSting(publicD.toByteArray()));
+        Log.d("wgc","公钥 E "+UtilTool.byteHexToSting(e.toByteArray()));
         //得到公钥字符串
         System.out.println("公钥：" + Base64.encodeToString(publicKey.getEncoded(), Base64.NO_WRAP));
         String privateK=Base64.encodeToString(privateKey.getEncoded(), Base64.NO_WRAP);
@@ -143,7 +148,4 @@ public class RSAUtil {
         return new String(cipher.doFinal(inputByte), StandardCharsets.UTF_8);
     }
 
-    public static boolean verifySign(String srcStr, String signStr) {
-        return verifySign(DEFAULT_PUB_KEY, srcStr, signStr);
-    }
 }

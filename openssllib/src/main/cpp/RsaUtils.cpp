@@ -67,7 +67,7 @@ jbyteArray publicKeyEncrypt(JNIEnv *env, jbyteArray publicKeys_, jbyteArray src_
         memset(cipherText, 0, flen);
         ret = RSA_public_encrypt(src_flen, srcOrigin + src_offset, cipherText, rsa,
                                  RSA_PKCS1_PADDING);
-
+        LOGD("ret  %d ", ret);
         memcpy(desText + cipherText_offset, cipherText, ret);
         cipherText_offset += ret;
         src_offset += src_flen;
@@ -202,7 +202,11 @@ jbyteArray privateKeyDecrypt(JNIEnv *env, jbyteArray privateKeys_, jbyteArray sr
     LOGD("RSA->对数据进行私钥解密运算");
     //一次性解密数据最大字节数RSA_size
     for (int i = 0; i <= src_Len / flen; i++) {
-        src_flen = (i == src_Len / flen) ? src_Len % flen : flen;
+        if (i == src_Len / flen) {
+            src_flen = src_Len % flen;
+        } else {
+            src_flen = flen;
+        }
         if (src_flen == 0) {
             break;
         }
